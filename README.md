@@ -1,4 +1,6 @@
 # Magento 2 Frontools
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/AmpersandHQ/magento2-frontools.svg)](https://greenkeeper.io/)
 Set of front-end tools for Magento 2, based on Gulp.js
 
 ## Questions
