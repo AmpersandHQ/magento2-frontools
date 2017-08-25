@@ -45,7 +45,6 @@
     "marked": "~0.3.6",
     "marked-terminal": "~2.0.0",
     "merge-stream": "~1.0.1",
-    "node-sass": "^4.5.3",
     "postcss-reporter": "~3.0.0",
     "run-sequence": "~1.2.2",
     "sass-true": "^3.0.0-beta.1",
