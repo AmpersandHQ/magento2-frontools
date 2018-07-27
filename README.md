@@ -91,6 +91,7 @@ The bundle also needs to have a entry file in the format `*.babel.js` for the co
 * `sasslint` - Run [sass-lint](https://github.com/sasstools/sass-lint) based tests.
   * `--theme name` - Process single theme.
   * `--ci` - Enable throwing errors. Useful in CI/CD pipelines.
+* `sasstest` - Run unit tests against your SCSS code using [true](https://github.com/oddbird/true) and Mocha
 * `setup` - Creates a convenient symlink from `/tools` to `/vendor/snowdog/frontools` and copies all sample files if no configuration exists.
   * `--symlink name` - If you don't want to use `tools` as the symlink you can specify another name.
 * `styles` - Use this task to manually trigger styles processing pipeline.
