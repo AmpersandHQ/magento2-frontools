@@ -20,6 +20,8 @@ import { env, themes, tempPath, projectPath, browserSyncInstances } from '../hel
 export default function(name, file) {
   const theme = themes[name]
   const srcBase = path.join(tempPath, theme.dest)
+  // const srcBase = path.join(tempPath, theme.dest.replace('pub/static', ''))
+
   const stylesDir = theme.stylesDir ? theme.stylesDir : 'styles'
   const dest = []
   const disableMaps = env.disableMaps || false
@@ -52,7 +54,7 @@ export default function(name, file) {
   })
 
   const gulpTask = src( // eslint-disable-line one-var
-    file || srcBase + '/**/*.scss',
+    file || srcBase + '/web/**/*.scss',
     { base: srcBase }
   )
     .pipe(
