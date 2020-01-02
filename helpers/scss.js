@@ -20,7 +20,6 @@ import { env, themes, tempPath, projectPath, browserSyncInstances } from '../hel
 export default function(name, file) {
   const theme = themes[name]
   const srcBase = path.join(tempPath, theme.dest)
-  // const srcBase = path.join(tempPath, theme.dest.replace('pub/static', ''))
 
   const stylesDir = theme.stylesDir ? theme.stylesDir : 'styles'
   const dest = []
