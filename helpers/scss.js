@@ -53,8 +53,11 @@ export default function(name, file) {
   })
 
   const gulpTask = src( // eslint-disable-line one-var
-    file || srcBase + '/web/**/*.scss',
-    { base: srcBase }
+    [
+      file || srcBase + '/web/**/*.scss', 
+      '!' + srcBase + '**/node_modules/**/*.scss'
+    ],
+    { base: srcBase, gitignore:true }
   )
     .pipe(
       gulpIf(
