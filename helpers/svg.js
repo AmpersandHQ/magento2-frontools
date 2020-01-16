@@ -15,38 +15,59 @@ export default name => {
   const srcBase = path.join(projectPath, theme.src)
 
   const dest = path.join(srcBase, gulpicon.themeDest)
-  const svgConfig = configLoader('svg-sprite.json')
+  // const svgConfig = configLoader('svg-sprite.json')
   const templatePath = path.join(srcBase, gulpicon.themeTemplate)
 
-  console.log('templatePath', templatePath)
+  // const config = {
+  //   dest: '.',
+  //   shape: {
+  //     spacing: {
+  //       padding: 5
+  //     },
+  //     id: {
+  //       generator: file => path.basename(file, '.svg')
+  //     },
+  //     dest: 'images/icons/svg'
+  //   },
+  //   mode: {
+  //     css: {
+  //       dest: 'scss/components/test_svg_sprite.scss',
+  //       prefix: '.c-icon--',
+  //       sprite: 'sprite.svg',
+  //       layout: 'diagonal',
+  //       bust: true,
+  //       render: {
+  //         scss: {
+  //           dest: '_sprite.scss',
+  //           template: templatePath
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   const config = {
-    dest: '.',
-    shape: {
-      spacing: {
-        padding: 5
-      },
-      id: {
-        generator: file => path.basename(file, '.svg')
-      },
-      dest: 'images/icons/svg'
+    // shape: {
+    //   dest: '.'
+    // },
+    svg: {
+      xmlDeclaration: false,
+      doctypeDeclaration: false
     },
     mode: {
       css: {
-        dest: 'scss/components/test_svg_sprite.scss',
-        prefix: '.c-icon--',
-        sprite: 'sprite.svg',
-        layout: 'diagonal',
-        bust      : true,
+        dest: '.',
+        prefix: '.c-icon--%s',
+        common: '.c-icon',
+        bust: false,
+        // sprite: false,
+        example: false,
         render: {
-            scss: {
-              dest: '_sprite.scss',
-              template: '/Users/hannahfan/src/seraphine2020/app/design/frontend/Seraphine/default/web/images/icons/templates/default-css.hbs'
-            }
+          scss: {}
         }
       }
     }
-  };
+  }
 
   const gulpTask = src(srcBase + '/**/icons/**/*.svg')
     .pipe(
