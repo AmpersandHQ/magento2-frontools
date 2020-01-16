@@ -18,6 +18,8 @@ export default name => {
   const svgConfig = configLoader('svg-sprite.json')
   const templatePath = path.join(srcBase, gulpicon.themeTemplate)
 
+  console.log('templatePath', templatePath)
+
   const config = {
     dest: '.',
     shape: {
@@ -71,6 +73,6 @@ export default name => {
       gulpTask.pipe(instance.stream())
     })
   }
- 
+
   return gulpTask
 }
