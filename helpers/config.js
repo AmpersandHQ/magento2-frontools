@@ -9,3 +9,19 @@ export const projectPath = path.join(fs.realpathSync('../../../'), '/')
 export const tempPath = path.join(projectPath, 'var/view_preprocessed/frontools/')
 export const themes = configLoader('themes.json', false)
 export const browserSyncInstances = {}
+
+export const gulpicon = {
+    "datasvgcss": "_components.icons-data-svg.scss",
+    "datapngcss": "_components.icons-data-png.scss",
+    "urlpngcss": "_components.icons-url-png.scss",
+    "pngfolder": "../../images/icons/png",
+    "cssprefix": ".c-icon--",
+    "defaultWidth": "28px",
+    "defaultHeight": "28px",
+    "compressPNG": true,
+    "enhanceSVG": true,
+    "themeSrc": "/web/images/icons/svg/",
+    "themeDest": "/web/",
+    "themeTemplate": "/web/images/icons/templates/default-css.hbs",
+    "themePreviewTemplate": "/web/images/icons/templates/preview-custom.hbs"
+}
