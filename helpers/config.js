@@ -20,8 +20,8 @@ export const gulpicon = {
   'defaultHeight': '28px',
   'compressPNG': true,
   'enhanceSVG': true,
-  'themeSrc': '/web/images/icons/svg/',
-  'themeDest': '/web/images/icons/svg/',
-  'themeTemplate': '/web/images/icons/templates/default-css.hbs',
-  'themePreviewTemplate': '/web/images/icons/templates/preview-custom.hbs'
+  'themeSrc': 'images/icons/svg',
+  'themeDest': 'web',
+  'themeTemplate': '/images/icons/templates/default-css.hbs',
+  // 'themePreviewTemplate': '/web/images/icons/templates/preview-custom.hbs'
 }

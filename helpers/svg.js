@@ -1,5 +1,5 @@
 import { src } from 'gulp'
-import  gulp from 'gulp'
+import gulp from 'gulp'
 import path from 'path'
 import gulpIf from 'gulp-if'
 import multiDest from 'gulp-multi-dest'
@@ -13,10 +13,13 @@ import { env, tempPath, projectPath, themes, browserSyncInstances, gulpicon } fr
 export default name => {
   const theme = themes[name]
   const srcBase = path.join(projectPath, theme.src)
-
+  const svgDest = path.join(srcBase, gulpicon.themeSrc)
   const dest = path.join(srcBase, gulpicon.themeDest)
   // const svgConfig = configLoader('svg-sprite.json')
   const templatePath = path.join(srcBase, gulpicon.themeTemplate)
+
+  // console.log(`${name} svgDest`, svgDest)
+  // console.log(`${name} dest`, dest)
 
   // const config = {
   //   dest: '.',
@@ -47,29 +50,34 @@ export default name => {
   // }
 
   const config = {
-    // shape: {
-    //   dest: '.'
-    // },
+    shape: {
+      dest: gulpicon.themeSrc,
+      id: {
+        generator: file => path.basename(file, '.svg')
+      }
+    },
     svg: {
       xmlDeclaration: false,
       doctypeDeclaration: false
     },
     mode: {
       css: {
-        dest: '.',
+        dest: 'scss/components',
         prefix: '.c-icon--%s',
-        common: '.c-icon',
+        common: 'c-icon',
+        dimensions: true,
         bust: false,
-        // sprite: false,
         example: false,
         render: {
-          scss: {}
+          scss: {
+            dest: '_components.icons.scss'
+          }
         }
       }
     }
   }
 
-  const gulpTask = src(srcBase + '/**/icons/**/*.svg')
+  const gulpTask = src(`${srcBase}/**/icons/**/*.svg`)
     .pipe(
       gulpIf(
         !env.ci,
