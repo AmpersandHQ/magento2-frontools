@@ -8,7 +8,22 @@ import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import svgSprite from 'gulp-svg-sprite'
 import configLoader from './config-loader'
-import { env, tempPath, projectPath, themes, browserSyncInstances, gulpicon } from './config'
+import { env, tempPath, projectPath, themes, browserSyncInstances } from './config'
+
+const gulpicon = {
+  'datasvgcss': '_components.icons-data-svg.scss',
+  'datapngcss': '_components.icons-data-png.scss',
+  'urlpngcss': '_components.icons-url-png.scss',
+  'pngfolder': '../../images/icons/png',
+  'cssprefix': '.c-icon--',
+  'defaultWidth': '28px',
+  'defaultHeight': '28px',
+  'compressPNG': true,
+  'enhanceSVG': true,
+  'themeSrc': 'images/icons/svg',
+  'themeDest': 'web',
+  'themeTemplate': '/images/icons/templates/default-css.hbs',
+}
 
 export default name => {
   const theme = themes[name]
@@ -17,37 +32,6 @@ export default name => {
   const dest = path.join(srcBase, gulpicon.themeDest)
   // const svgConfig = configLoader('svg-sprite.json')
   const templatePath = path.join(srcBase, gulpicon.themeTemplate)
-
-  // console.log(`${name} svgDest`, svgDest)
-  // console.log(`${name} dest`, dest)
-
-  // const config = {
-  //   dest: '.',
-  //   shape: {
-  //     spacing: {
-  //       padding: 5
-  //     },
-  //     id: {
-  //       generator: file => path.basename(file, '.svg')
-  //     },
-  //     dest: 'images/icons/svg'
-  //   },
-  //   mode: {
-  //     css: {
-  //       dest: 'scss/components/test_svg_sprite.scss',
-  //       prefix: '.c-icon--',
-  //       sprite: 'sprite.svg',
-  //       layout: 'diagonal',
-  //       bust: true,
-  //       render: {
-  //         scss: {
-  //           dest: '_sprite.scss',
-  //           template: templatePath
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
   const config = {
     shape: {
