@@ -7,13 +7,12 @@ import logger from 'gulp-logger'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import svgSprite from 'gulp-svg-sprite'
-import { env, projectPath, themes, browserSyncInstances } from './config'
+import { env, projectPath, themes, browserSyncInstances, svgConfig } from './config'
 
 export default name => {
   const theme = themes[name]
   const srcBase = path.join(projectPath, theme.src)
-  const dest = path.join(srcBase, gulpicon.themeDest)
-
+  const dest = path.join(srcBase, 'web')
 
   const config = {
     ...svgConfig,
