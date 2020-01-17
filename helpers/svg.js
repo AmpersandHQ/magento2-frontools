@@ -7,6 +7,7 @@ import logger from 'gulp-logger'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import svgSprite from 'gulp-svg-sprite'
+import inlineSvg from 'gulp-inline-svg'
 import configLoader from './config-loader'
 import { env, projectPath, themes, browserSyncInstances } from './config'
 
@@ -16,14 +17,14 @@ export default name => {
   const dest = path.join(srcBase, 'web')
   const svgConfig = configLoader('svg-sprite.json')
 
-  const config = {
-    ...svgConfig,
-    shape: {
-      id: {
-        generator: file => path.basename(file, '.svg')
-      }
-    },
-  }
+  // const config = {
+  //   ...svgConfig,
+  //   shape: {
+  //     id: {
+  //       generator: file => path.basename(file, '.svg')
+  //     }
+  //   },
+  // }
 
   const gulpTask = src(`${srcBase}/**/icons/**/*.svg`)
     .pipe(
@@ -34,7 +35,11 @@ export default name => {
         })
       )
     )
-    .pipe(svgSprite(config))
+    // .pipe(svgSprite(config))
+    .pipe(inlineSvg({
+      filename: 'scss/components/_components.icons.TEST.scss',
+      template: `${srcBase}/web/images/icons/templates/default-css.hbs`
+    }))
     .pipe(gulp.dest(dest))
     .pipe(multiDest(dest))
     .pipe(logger({

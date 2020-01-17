@@ -64,6 +64,7 @@
   },
   "devDependencies": {
     "eslint-config-idiomatic": "^4.0.0",
+    "gulp-inline-svg": "^1.2.0",
     "gulp-svgfallback": "^5.0.1"
   },
   "scripts": {
