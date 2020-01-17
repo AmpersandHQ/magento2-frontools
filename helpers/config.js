@@ -9,5 +9,3 @@ export const projectPath = path.join(fs.realpathSync('../../../'), '/')
 export const tempPath = path.join(projectPath, 'var/view_preprocessed/frontools/')
 export const themes = configLoader('themes.json', false)
 export const browserSyncInstances = {}
-
-export const svgConfig = configLoader('svg-sprite.json')
