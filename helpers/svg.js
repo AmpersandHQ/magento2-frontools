@@ -17,14 +17,10 @@ export default name => {
   const dest = path.join(srcBase, 'web')
   const svgConfig = configLoader('svg-sprite.json')
 
-  // const config = {
-  //   ...svgConfig,
-  //   shape: {
-  //     id: {
-  //       generator: file => path.basename(file, '.svg')
-  //     }
-  //   },
-  // }
+  const config = {
+    filename: svgConfig.filename,
+    template: `${srcBase}/${svgConfig.template}`
+  }
 
   const gulpTask = src(`${srcBase}/**/icons/**/*.svg`)
     .pipe(
@@ -36,10 +32,7 @@ export default name => {
       )
     )
     // .pipe(svgSprite(config))
-    .pipe(inlineSvg({
-      filename: 'scss/components/_components.icons.TEST.scss',
-      template: `${srcBase}/web/images/icons/templates/default-css.hbs`
-    }))
+    .pipe(inlineSvg(config))
     .pipe(gulp.dest(dest))
     .pipe(multiDest(dest))
     .pipe(logger({

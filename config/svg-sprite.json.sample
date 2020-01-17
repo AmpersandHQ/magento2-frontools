@@ -1,24 +1,4 @@
 {
-    "shape": {
-        "dest": "images/icons/svg"
-    },
-    "svg": {
-        "xmlDeclaration": false,
-        "doctypeDeclaration": false
-    },
-    "mode": {
-        "css": {
-            "dest": "scss/components",
-            "prefix": ".c-icon--%s",
-            "common": "c-icon",
-            "dimensions": true,
-            "bust": false,
-            "example": false,
-            "render": {
-                "scss": {
-                    "dest": "_components.icons.scss"
-                }
-            }
-        }
-    }
+    "filename": "scss/components/_components.icons.scss",
+    "template": "web/images/icons/templates/default-css.hbs"
 }
