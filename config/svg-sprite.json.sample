@@ -1,6 +1,24 @@
 {
-    "symbol": {
-        "dest": "images",
-        "sprite": "icons-sprite.svg"
+    "shape": {
+        "dest": "images/icons/svg"
+    },
+    "svg": {
+        "xmlDeclaration": false,
+        "doctypeDeclaration": false
+    },
+    "mode": {
+        "css": {
+            "dest": "scss/components",
+            "prefix": ".c-icon--%s",
+            "common": "c-icon",
+            "dimensions": true,
+            "bust": false,
+            "example": false,
+            "render": {
+                "scss": {
+                    "dest": "_components.icons.scss"
+                }
+            }
+        }
     }
 }
