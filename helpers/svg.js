@@ -16,9 +16,14 @@ export default name => {
   const srcBase = path.join(projectPath, theme.src)
   const dest = path.join(srcBase, 'web')
   const svgConfig = configLoader('svg-sprite.json')
+  let fileName = svgConfig.file.name
+
+  if (name !== 'base') {
+    fileName = `${svgConfig.file.name}.extend`
+  }
 
   const config = {
-    filename: svgConfig.filename,
+    filename: `${svgConfig.file.path}/${fileName}.${svgConfig.file.type}`,
     template: `${srcBase}/${svgConfig.template}`
   }
 
