@@ -1,4 +1,8 @@
 {
-    "filename": "scss/components/_components.icons.scss",
-    "template": "web/images/icons/templates/default-css.hbs"
+    "file": {
+        "path": "scss/components",
+        "name": "_components.icons",
+        "type": "scss"
+    },
+    "template": "web/images/icons/templates/css-icon.hbs"
 }

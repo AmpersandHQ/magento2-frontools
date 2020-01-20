@@ -53,7 +53,7 @@ export const setup = callback => {
           }
         )
 
-        log('File ' + fileName + ' copied to web/images/icons/templates' + newFileName)
+        log('File ' + fileName + ' copied to web/images/icons/templates/' + newFileName)
       }
       catch (error) {
         log(
