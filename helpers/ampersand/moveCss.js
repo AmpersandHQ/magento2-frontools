@@ -13,24 +13,29 @@ import { env, projectPath, themes, browserSyncInstances } from '../config'
 export default name => {
   const theme = themes[name]
   const srcBase = path.join(projectPath, theme.src)
-  const dest = path.join(srcBase, 'web/images/icons/png')
+  const dest = path.join(srcBase, 'web/scss/components')
+  let scssFilename = '_components.icons-png'
 
-  const gulpTask = src(`${srcBase}/**/icons/**/*.svg`)
+  if (name !== 'base') {
+    scssFilename = `${scssFilename}.extend`
+  }
+
+  const gulpTask = src(`${srcBase}/web/images/icons/default.css`)
     .pipe(
-      gulpIf(
-        !env.ci,
-        plumber({
-          errorHandler: notify.onError('Error: <%= error.message %>')
-        })
-      )
+      rename({
+        basename: scssFilename,
+        extname: '.scss'
+      })
     )
-    .pipe(svgFallback())
     .pipe(gulp.dest(dest))
-    // .pipe(logger({
-    //   display   : 'name',
-    //   beforeEach: 'Theme: ' + name + ' ',
-    //   afterEach : ' Compiled!'
-    // }))
+
+  if (browserSyncInstances) {
+    Object.keys(browserSyncInstances).forEach(instanceKey => {
+      const instance = browserSyncInstances[instanceKey]
+
+      gulpTask.pipe(instance.stream())
+    })
+  }
 
   return gulpTask
 }

@@ -6,6 +6,7 @@ import multiDest from 'gulp-multi-dest'
 import logger from 'gulp-logger'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
+import svgMin from 'gulp-svgmin'
 import inlineSvg from 'gulp-inline-svg'
 import configLoader from '../config-loader'
 import { env, projectPath, themes, browserSyncInstances } from '../config'
@@ -35,6 +36,7 @@ export default name => {
         })
       )
     )
+    .pipe(svgMin())
     .pipe(inlineSvg(config))
     .pipe(gulp.dest(dest))
     .pipe(multiDest(dest))

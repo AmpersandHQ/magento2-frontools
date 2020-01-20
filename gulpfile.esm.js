@@ -25,7 +25,7 @@ export const sasslint = sassLintTask
 export const setup = setupTask
 export const styles = series(inheritanceTask, stylesTask)
 export const svg = series(inheritanceTask, svgTask)
-export const icons = series(inheritanceTask, iconsTask)
 export const watch = watchTask
+export const icons = series(inheritanceTask, iconsTask)
 
 export { default as default } from './tasks/default'
