@@ -1,0 +1,11 @@
+@mixin icon-common {
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+{{#svgs}}
+.c-icon--{{{name}}} {
+	@include icon-common();
+	background-image: url("{{{inline}}}");
+}
+{{/svgs}}
