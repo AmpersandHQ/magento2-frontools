@@ -13,6 +13,7 @@ import { setup as setupTask } from './tasks/setup'
 import { styles as stylesTask } from './tasks/styles'
 import { svg as svgTask } from './tasks/svg'
 import { watch as watchTask } from './tasks/watch'
+import { icons as iconsTask } from './tasks/ampersand/icons'
 
 export const babel = series(inheritanceTask, babelTask)
 export const clean = cleanTask
@@ -24,6 +25,7 @@ export const sasslint = sassLintTask
 export const setup = setupTask
 export const styles = series(inheritanceTask, stylesTask)
 export const svg = series(inheritanceTask, svgTask)
+export const icons = series(inheritanceTask, iconsTask)
 export const watch = watchTask
 
 export { default as default } from './tasks/default'

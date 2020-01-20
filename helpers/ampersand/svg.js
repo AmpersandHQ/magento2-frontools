@@ -1,26 +1,32 @@
 import { src } from 'gulp'
+import gulp from 'gulp'
 import path from 'path'
 import gulpIf from 'gulp-if'
 import multiDest from 'gulp-multi-dest'
 import logger from 'gulp-logger'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
-import svgSprite from 'gulp-svg-sprite'
-
-import configLoader from './config-loader'
-import { env, tempPath, projectPath, themes, browserSyncInstances } from './config'
+import inlineSvg from 'gulp-inline-svg'
+import configLoader from '../config-loader'
+import { env, projectPath, themes, browserSyncInstances } from '../config'
 
 export default name => {
   const theme = themes[name]
-  const srcBase = path.join(tempPath, theme.dest)
-  const dest = []
-  const svgConfig = configLoader('svg-sprite.yml')
+  const srcBase = path.join(projectPath, theme.src)
+  const dest = path.join(srcBase, 'web')
+  const svgConfig = configLoader('svg-sprite.json')
+  let fileName = svgConfig.file.name
 
-  theme.locale.forEach(locale => {
-    dest.push(path.join(projectPath, theme.dest, locale))
-  })
+  if (name !== 'base') {
+    fileName = `${svgConfig.file.name}.extend`
+  }
 
-  const gulpTask = src(srcBase + '/**/icons/**/*.svg')
+  const config = {
+    filename: `${svgConfig.file.path}/${fileName}.${svgConfig.file.type}`,
+    template: `${srcBase}/${svgConfig.template}`
+  }
+
+  const gulpTask = src(`${srcBase}/**/icons/**/*.svg`)
     .pipe(
       gulpIf(
         !env.ci,
@@ -29,14 +35,8 @@ export default name => {
         })
       )
     )
-    .pipe(svgSprite({
-      shape: {
-        id: {
-          generator: file => path.basename(file, '.svg')
-        }
-      },
-      mode: svgConfig
-    }))
+    .pipe(inlineSvg(config))
+    .pipe(gulp.dest(dest))
     .pipe(multiDest(dest))
     .pipe(logger({
       display   : 'name',
