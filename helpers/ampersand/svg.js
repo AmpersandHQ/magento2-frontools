@@ -1,15 +1,8 @@
-import gulp, { src } from 'gulp'
 import path from 'path'
-import gulpIf from 'gulp-if'
-import multiDest from 'gulp-multi-dest'
-import logger from 'gulp-logger'
-import plumber from 'gulp-plumber'
-import notify from 'gulp-notify'
-import imagemin from 'gulp-imagemin'
 import globby from 'globby'
 import gulpicon from '@ampersandhq/gulpicon'
 import configLoader from '../config-loader'
-import { env, projectPath, themes, browserSyncInstances } from '../config'
+import { projectPath, themes } from '../config'
 
 export default name => {
   const theme = themes[name]
@@ -20,48 +13,15 @@ export default name => {
   config.dest = path.join(srcBase, config.themeDest)
   config.template = path.join(srcBase, config.themeTemplate)
   config.previewTemplate = path.join(srcBase, config.themePreviewTemplate)
-  config.previewhtml = false
   config.verbose = true
+  // set temp path for icon generation in the icons folder;
+  // grunticon creates it's own folder when it's working.
+  // Forced this way as Grunticon doesn't seem to be able to create
+  // a temp directory at OS-level as it does by default -
+  // possible permissions issue?
   config.tmpPath = iconPath
 
   const icons = globby.sync(`${iconPath}*.svg`)
 
-  return gulpicon(icons, config)(console.info)
-
-  // return gulpTask
-
-  // let fileName = svgConfig.file.name
-
-  // if (name !== 'base') {
-  //   fileName = `${svgConfig.file.name}.extend`
-  // }
-
-  // const config = {
-  //   filename: `${svgConfig.file.path}/${fileName}.${svgConfig.file.type}`,
-  //   template: `${srcBase}/${svgConfig.template}`
-  // }
-
-  // if (icons.length) {
-  //   return gulpicon(icons, config)((...args) => {
-  //     return Promise.resolve()
-  //   })
-  // }
-
-  // const gulpTask = src(iconPath)
-  //   .pipe()
-  //   .pipe(logger({
-  //     display   : 'name',
-  //     beforeEach: 'Theme: ' + name + ' ',
-  //     afterEach : ' Compiled!'
-  //   }))
-  //   // .pipe(gulpicon(icons, config))
-  // // const gulpTask = gulpicon(icons, config)
-
-  // // if (browserSyncInstances) {
-  // //   Object.keys(browserSyncInstances).forEach(instanceKey => {
-  // //     const instance = browserSyncInstances[instanceKey]
-
-  // //     gulpTask.pipe(instance.stream())
-  // //   })
-  // // }
+  return gulpicon(icons, config)()
 }
