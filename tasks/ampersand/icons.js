@@ -1,7 +1,5 @@
 import mergeStream from 'merge-stream'
 import helperSvg from '../../helpers/ampersand/svg'
-import helperPng from '../../helpers/ampersand/png'
-import helperMoveCss from '../../helpers/ampersand/moveCss'
 import themes from '../../helpers/get-themes'
 
 export const icons = () => {

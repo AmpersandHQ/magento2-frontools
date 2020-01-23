@@ -17,6 +17,19 @@ export default name => {
   const srcBase = path.join(projectPath, theme.src)
   const iconPath = path.join(srcBase, config.themeSrc)
 
+  config.dest = path.join(srcBase, config.themeDest)
+  config.template = path.join(srcBase, config.themeTemplate)
+  config.previewTemplate = path.join(srcBase, config.themePreviewTemplate)
+  config.previewhtml = false
+  config.verbose = true
+  config.tmpPath = iconPath
+
+  const icons = globby.sync(`${iconPath}*.svg`)
+
+  return gulpicon(icons, config)(console.info)
+
+  // return gulpTask
+
   // let fileName = svgConfig.file.name
 
   // if (name !== 'base') {
@@ -28,31 +41,27 @@ export default name => {
   //   template: `${srcBase}/${svgConfig.template}`
   // }
 
-  config.dest = path.join(srcBase, config.themeDest)
-  config.template = path.join(srcBase, config.themeTemplate)
-  config.previewTemplate = path.join(srcBase, config.themePreviewTemplate)
-  config.verbose = true
-  config.compressPNG = false
-
-  const icons = globby.sync(`${iconPath}*.svg`)
-
-  const gulpTask = src(iconPath)
-    .pipe(gulpicon(icons, config))
-    .pipe(logger({
-      display   : 'name',
-      beforeEach: 'Theme: ' + name + ' ',
-      afterEach : ' Compiled!'
-    }))
-    // .pipe(gulpicon(icons, config))
-  // const gulpTask = gulpicon(icons, config)
-
-  // if (browserSyncInstances) {
-  //   Object.keys(browserSyncInstances).forEach(instanceKey => {
-  //     const instance = browserSyncInstances[instanceKey]
-
-  //     gulpTask.pipe(instance.stream())
+  // if (icons.length) {
+  //   return gulpicon(icons, config)((...args) => {
+  //     return Promise.resolve()
   //   })
   // }
 
-  return gulpTask
+  // const gulpTask = src(iconPath)
+  //   .pipe()
+  //   .pipe(logger({
+  //     display   : 'name',
+  //     beforeEach: 'Theme: ' + name + ' ',
+  //     afterEach : ' Compiled!'
+  //   }))
+  //   // .pipe(gulpicon(icons, config))
+  // // const gulpTask = gulpicon(icons, config)
+
+  // // if (browserSyncInstances) {
+  // //   Object.keys(browserSyncInstances).forEach(instanceKey => {
+  // //     const instance = browserSyncInstances[instanceKey]
+
+  // //     gulpTask.pipe(instance.stream())
+  // //   })
+  // // }
 }
