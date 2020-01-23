@@ -1,5 +1,4 @@
-import { src } from 'gulp'
-import gulp from 'gulp'
+import gulp, { src } from 'gulp'
 import path from 'path'
 import gulpIf from 'gulp-if'
 import multiDest from 'gulp-multi-dest'
@@ -7,52 +6,53 @@ import logger from 'gulp-logger'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import imagemin from 'gulp-imagemin'
-import inlineSvg from 'gulp-inline-svg'
+import globby from 'globby'
+import gulpicon from '@ampersandhq/gulpicon'
 import configLoader from '../config-loader'
 import { env, projectPath, themes, browserSyncInstances } from '../config'
 
 export default name => {
   const theme = themes[name]
+  const config = configLoader('gulpicon.json')
   const srcBase = path.join(projectPath, theme.src)
-  const dest = path.join(srcBase, 'web')
-  const svgConfig = configLoader('svg-sprite.json')
-  let fileName = svgConfig.file.name
+  const iconPath = path.join(srcBase, config.themeSrc)
 
-  if (name !== 'base') {
-    fileName = `${svgConfig.file.name}.extend`
-  }
+  // let fileName = svgConfig.file.name
 
-  const config = {
-    filename: `${svgConfig.file.path}/${fileName}.${svgConfig.file.type}`,
-    template: `${srcBase}/${svgConfig.template}`
-  }
+  // if (name !== 'base') {
+  //   fileName = `${svgConfig.file.name}.extend`
+  // }
 
-  const gulpTask = src(`${srcBase}/**/icons/**/*.svg`)
-    .pipe(
-      gulpIf(
-        !env.ci,
-        plumber({
-          errorHandler: notify.onError('Error: <%= error.message %>')
-        })
-      )
-    )
-    .pipe(imagemin())
-    .pipe(inlineSvg(config))
-    .pipe(gulp.dest(dest))
-    .pipe(multiDest(dest))
+  // const config = {
+  //   filename: `${svgConfig.file.path}/${fileName}.${svgConfig.file.type}`,
+  //   template: `${srcBase}/${svgConfig.template}`
+  // }
+
+  config.dest = path.join(srcBase, config.themeDest)
+  config.template = path.join(srcBase, config.themeTemplate)
+  config.previewTemplate = path.join(srcBase, config.themePreviewTemplate)
+  config.verbose = true
+  config.compressPNG = false
+
+  const icons = globby.sync(`${iconPath}*.svg`)
+
+  const gulpTask = src(iconPath)
+    .pipe(gulpicon(icons, config))
     .pipe(logger({
       display   : 'name',
       beforeEach: 'Theme: ' + name + ' ',
       afterEach : ' Compiled!'
     }))
+    // .pipe(gulpicon(icons, config))
+  // const gulpTask = gulpicon(icons, config)
 
-  if (browserSyncInstances) {
-    Object.keys(browserSyncInstances).forEach(instanceKey => {
-      const instance = browserSyncInstances[instanceKey]
+  // if (browserSyncInstances) {
+  //   Object.keys(browserSyncInstances).forEach(instanceKey => {
+  //     const instance = browserSyncInstances[instanceKey]
 
-      gulpTask.pipe(instance.stream())
-    })
-  }
+  //     gulpTask.pipe(instance.stream())
+  //   })
+  // }
 
   return gulpTask
 }

@@ -7,6 +7,7 @@ import logger from 'gulp-logger'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import svgFallback from 'gulp-svgfallback'
+import imagemin from 'gulp-imagemin'
 import configLoader from '../config-loader'
 import { env, projectPath, themes, browserSyncInstances } from '../config'
 
@@ -24,6 +25,7 @@ export default name => {
         })
       )
     )
+    .pipe(imagemin())
     .pipe(svgFallback())
     .pipe(gulp.dest(dest))
     // .pipe(logger({

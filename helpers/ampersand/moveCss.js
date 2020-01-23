@@ -20,7 +20,7 @@ export default name => {
     scssFilename = `${scssFilename}.extend`
   }
 
-  const gulpTask = src(`${srcBase}/web/images/icons/default.css`)
+  const gulpTask = src(`${srcBase}/web/images/icons/png/default.css`)
     .pipe(
       rename({
         basename: scssFilename,

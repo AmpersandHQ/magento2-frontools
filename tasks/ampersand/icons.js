@@ -5,11 +5,12 @@ import helperMoveCss from '../../helpers/ampersand/moveCss'
 import themes from '../../helpers/get-themes'
 
 export const icons = () => {
-  const streams = mergeStream()
+  // const streams = mergeStream()
   themes().forEach(name => {
-    streams.add(helperSvg(name))
+    helperSvg(name)
     // streams.add(helperPng(name))
     // streams.add(helperMoveCss(name))
   })
-  return streams
+  // return streams
+  return true
 }
