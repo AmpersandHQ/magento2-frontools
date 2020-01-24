@@ -81,6 +81,8 @@
     "svg": "gulp svg",
     "icons": "gulp icons",
     "watch": "gulp watch",
+    "webpackBuild": "gulp webpackBuild",
+    "webpackDist": "gulp webpackDist",
     "test": "eslint *.js helpers/*.js tasks/*.js"
   },
   "engines": {

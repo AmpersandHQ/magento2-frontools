@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function() { // eslint-disable-line func-names
+const webpackDist = function() { // eslint-disable-line func-names
   // Global variables
   const gulp    = this.gulp,
         plugins = this.opts.plugins,
@@ -15,3 +15,5 @@ module.exports = function() { // eslint-disable-line func-names
 
   return streams;
 };
+
+module.exports = webpackDist
