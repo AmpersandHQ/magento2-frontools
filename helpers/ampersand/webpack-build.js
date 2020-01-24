@@ -12,13 +12,9 @@ import vinylPaths from 'vinyl-paths'
 import { env, tempPath, themes, browserSyncInstances } from '../config'
 
 'use strict'
-const webpackBuild = (name, file) => { // eslint-disable-line func-names
+const webpackBuild = (name, file) => {
   const theme = themes[name]
   const srcBase = tempPath
-//   const stylesDir = theme.stylesDir ? theme.stylesDir : 'styles'
-//   const disableMaps = plugins.util.env.disableMaps || false
-//   const production = plugins.util.env.prod || false
-//   const babelConfig = { presets: require('babel-preset-env') }
 
   function adjustDestinationDirectory(file) {
     file.dirname = file.dirname.replace('web/', '')
@@ -28,10 +24,6 @@ const webpackBuild = (name, file) => { // eslint-disable-line func-names
   function getModuleDir(file) {
     return file.replace(/view\/frontend\/web\/js\/(.*)\.entry\.js/, '')
   }
-
-//   function getJsDir(file) {
-//     return file.path.replace(/'(.*).entry.js'/, '')
-//   }
 
   const dest = []
   theme.locale.forEach(locale => {
