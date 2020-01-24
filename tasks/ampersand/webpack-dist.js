@@ -1,19 +1,16 @@
-'use strict';
-const webpackDist = function() { // eslint-disable-line func-names
-  // Global variables
-  const gulp    = this.gulp,
-        plugins = this.opts.plugins,
-        config  = this.opts.configs,
-        themes  = plugins.getThemes(),
-        streams = plugins.mergeStream(),
-        webpack = this.webpack;
+import mergeStream from 'merge-stream'
+import themes from '../../helpers/get-themes'
+import webpackDist from '../../helpers/ampersand/webpack-dist'
+
+const webpackDistTask = function() { // eslint-disable-line func-names
+  const streams = mergeStream()
 
   // Loop through themes to compile scss or less depending on your config.json
-  themes.forEach(name => {
-    streams.add(require('../helper/webpack-dist')(gulp, plugins, config, name));
-  });
+  themes().forEach(name => {
+    streams.add(webpackDist(name))
+  })
 
-  return streams;
-};
+  return streams
+}
 
-module.exports = webpackDist
+export default webpackDistTask
