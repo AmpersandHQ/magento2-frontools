@@ -1,4 +1,4 @@
-// import path from 'path'
+import path from 'path'
 import gulp from 'gulp'
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
@@ -25,10 +25,7 @@ const webpackBuild = (name, file) => {
     return file.replace(/view\/frontend\/web\/js\/(.*)\.entry\.js/, '')
   }
 
-  const dest = []
-  theme.locale.forEach(locale => {
-    dest.push(theme.projectPath + theme.dest + '/' + locale)
-  })
+  const dest = theme.locale.map(locale => path.join(theme.src, theme.dest, locale))
 
   const gulpTask = gulp.src(
     [
