@@ -1,14 +1,8 @@
-import mergeStream from 'merge-stream'
 import helperSvg from '../../helpers/ampersand/svg'
 import themes from '../../helpers/get-themes'
 
-export const icons = () => {
-  // const streams = mergeStream()
+export const icons = cb => {
   themes().forEach(name => {
-    helperSvg(name)
-    // streams.add(helperPng(name))
-    // streams.add(helperMoveCss(name))
+    helperSvg(name, cb)
   })
-  // return streams
-  return true
 }

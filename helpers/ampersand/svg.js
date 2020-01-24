@@ -4,7 +4,7 @@ import gulpicon from '@ampersandhq/gulpicon'
 import configLoader from '../config-loader'
 import { projectPath, themes } from '../config'
 
-export default name => {
+export default (name, cb) => {
   const theme = themes[name]
   const config = configLoader('gulpicon.json')
   const srcBase = path.join(projectPath, theme.src)
@@ -23,5 +23,5 @@ export default name => {
 
   const icons = globby.sync(`${iconPath}*.svg`)
 
-  return gulpicon(icons, config)()
+  return gulpicon(icons, config)(cb)
 }
