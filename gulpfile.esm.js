@@ -42,6 +42,10 @@ export const webpackBuild = webpackBuildTask
 export const webpackDist = webpackDistTask
 export const webpack = series(inheritanceTask, webpackBuild, webpackDist)
 export const build = series(styles, babel, webpackBuildTask, webpackDistTask)
+// NOTE: This changes the default setup task that comes with Frontools to use theirs and
+// ours. Done like this as we already tell people to run `gulp setup` to get the tools folder
+// symlinked (etc.), so rather than breaking established habit, let's just keep the
+// task name
 export const setup = series(setupTask, setupBackstop, setupTemplates)
 
 export { default as default } from './tasks/default'
