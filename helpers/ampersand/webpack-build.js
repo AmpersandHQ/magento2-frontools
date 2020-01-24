@@ -1,11 +1,24 @@
+// import path from 'path'
+import gulp from 'gulp'
+import plumber from 'gulp-plumber'
+import notify from 'gulp-notify'
+import gulpIf from 'gulp-if'
+import rename from 'gulp-rename'
+import multiDest from 'gulp-multi-dest'
+import logger from 'gulp-logger'
+import webpackStream from 'webpack-stream'
+import webpack from 'webpack'
+import vinylPaths from 'vinyl-paths'
+import { env, tempPath, themes, browserSyncInstances } from '../config'
+
 'use strict'
-module.exports = function(gulp, plugins, config, name, file) { // eslint-disable-line func-names
-  const theme = config.themes[name]
-  const srcBase = config.projectPath + 'var/view_preprocessed/frontools' + theme.dest.replace('pub/static', '')
-  const stylesDir = theme.stylesDir ? theme.stylesDir : 'styles'
-  const disableMaps = plugins.util.env.disableMaps || false
-  const production = plugins.util.env.prod || false
-  const babelConfig = { presets: require('babel-preset-env') }
+const webpackBuild = (name, file) => { // eslint-disable-line func-names
+  const theme = themes[name]
+  const srcBase = tempPath
+//   const stylesDir = theme.stylesDir ? theme.stylesDir : 'styles'
+//   const disableMaps = plugins.util.env.disableMaps || false
+//   const production = plugins.util.env.prod || false
+//   const babelConfig = { presets: require('babel-preset-env') }
 
   function adjustDestinationDirectory(file) {
     file.dirname = file.dirname.replace('web/', '')
@@ -16,20 +29,16 @@ module.exports = function(gulp, plugins, config, name, file) { // eslint-disable
     return file.replace(/view\/frontend\/web\/js\/(.*)\.entry\.js/, '')
   }
 
-  function getJsDir(file) {
-    return file.path.replace(/'(.*).entry.js'/, '')
-  }
-
-  let webpackStream = require('webpack-stream')
-  let webpack = require('webpack')
-  let vinylPaths = require('vinyl-paths')
+//   function getJsDir(file) {
+//     return file.path.replace(/'(.*).entry.js'/, '')
+//   }
 
   const dest = []
-  theme.locale.forEach(function(locale) {
-    dest.push(config.projectPath + theme.dest + '/' + locale)
+  theme.locale.forEach(locale => {
+    dest.push(theme.projectPath + theme.dest + '/' + locale)
   })
 
-  return gulp.src(
+  const gulpTask = gulp.src(
     [
       file || srcBase + '/**/*.entry.js',
       '!' + srcBase + '/**/node_modules/**/*.js'
@@ -37,29 +46,41 @@ module.exports = function(gulp, plugins, config, name, file) { // eslint-disable
     { base: srcBase }
   )
     .pipe(
-      plugins.if(
-        !plugins.util.env.ci,
-        plugins.plumber({
-          errorHandler: plugins.notify.onError('Error: <%= error.message %>')
+      gulpIf(
+        !env.ci,
+        plumber({
+          errorHandler: notify.onError('Error: <%= error.message %>')
         })
       )
     )
-    .pipe(vinylPaths(function(path) {
+    .pipe(vinylPaths(path => {
       let moduleDir = getModuleDir(path)
       let webpackfile = moduleDir + 'webpack.config.js'
 
-      return new Promise(function(resolve, reject) {
+      return new Promise((resolve, reject) => {
         webpackStream(require(webpackfile), webpack)
           .pipe(gulp.dest(moduleDir + 'view/frontend/web/js/dist/'))
           .on('end', resolve)
+          .on('error', reject)
       })
     }))
-    .pipe(plugins.rename(adjustDestinationDirectory))
-    .pipe(plugins.multiDest(dest))
-    .pipe(plugins.logger({
+    .pipe(rename(adjustDestinationDirectory))
+    .pipe(multiDest(dest))
+    .pipe(logger({
       display: 'name',
       beforeEach: 'Theme: ' + name + ' ',
       afterEach: ' Compiled!'
     }))
-    .pipe(plugins.browserSync.stream())
+
+  if (browserSyncInstances) {
+    Object.keys(browserSyncInstances).forEach(instanceKey => {
+      const instance = browserSyncInstances[instanceKey]
+
+      gulpTask.pipe(instance.stream())
+    })
+  }
+
+  return gulpTask
 }
+
+export default webpackBuild

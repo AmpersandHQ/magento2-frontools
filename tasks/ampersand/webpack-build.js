@@ -1,26 +1,15 @@
-import gulp from 'gulp'
-import streams from 'merge-stream'
-import webpack from 'webpack'
+import mergeStream from 'merge-stream'
 import themes from '../../helpers/get-themes'
 import webpackBuild from '../../helpers/ampersand/webpack-build'
 
-'use strict';
-const webpackBuildTask = cb => { // eslint-disable-line func-names
-  cb()
-  // Global variables
-  // const gulp    = this.gulp,
-  //       plugins = this.opts.plugins,
-  //       config  = this.opts.configs,
-  //       themes  = plugins.getThemes(),
-  //       streams = plugins.mergeStream(),
-  //       webpack = this.webpack;
-
+const webpackBuildTask = () => { // eslint-disable-line func-names
+  const streams = mergeStream()
   // Loop through themes to compile scss or less depending on your config.json
-  // themes().forEach(name => {
-  //   streams.add(webpackBuild(gulp, plugins, config, name))
-  // })
+  themes().forEach(name => {
+    streams.add(webpackBuild(name))
+  })
 
-  // return streams
-};
+  return streams
+}
 
-module.exports = webpackBuildTask
+export default webpackBuildTask
