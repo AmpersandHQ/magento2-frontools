@@ -13,6 +13,10 @@ import { setup as setupTask } from './tasks/setup'
 import { styles as stylesTask } from './tasks/styles'
 import { svg as svgTask } from './tasks/svg'
 import { watch as watchTask } from './tasks/watch'
+
+/**
+ * Amp-specific task imports
+ */
 import { icons as iconsTask } from './tasks/ampersand/icons'
 import webpackBuildTask from './tasks/ampersand/webpack-build'
 import webpackDistTask from './tasks/ampersand/webpack-dist'
@@ -28,6 +32,10 @@ export const setup = setupTask
 export const styles = series(inheritanceTask, stylesTask)
 export const svg = series(inheritanceTask, svgTask)
 export const watch = watchTask
+
+/**
+ * Amp-specific tasks
+ */
 export const icons = series(inheritanceTask, iconsTask)
 export const webpackBuild = webpackBuildTask
 export const webpackDist = webpackDistTask
