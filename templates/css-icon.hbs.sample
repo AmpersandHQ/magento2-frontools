@@ -1,11 +1,6 @@
-@mixin icon-common {
+{{#each customselectors}}{{this}},{{/each}}
+{{prefix}}{{name}} {
 	background-repeat: no-repeat;
 	background-size: contain;
+	background-image: url('{{datauri}}');
 }
-
-{{#svgs}}
-.c-icon--{{{name}}} {
-	@include icon-common();
-	background-image: url("{{{inline}}}");
-}
-{{/svgs}}
