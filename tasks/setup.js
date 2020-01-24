@@ -3,7 +3,7 @@ import path from 'path'
 import log from 'fancy-log'
 import colors from 'ansi-colors'
 
-import { env, projectPath, themes } from '../helpers/config'
+import { env, projectPath } from '../helpers/config'
 
 export const setup = callback => {
   // Create a relative symlink in project root to /vendor/snowdog/frontools
@@ -16,9 +16,6 @@ export const setup = callback => {
   // Set config files paths
   const configSamplesPath = './config/'
   const configPath = path.join(projectPath, 'dev/tools/frontools/config/')
-
-  // Set template files paths
-  const templateSamplePath = './templates'
 
   try {
     fs.symlinkSync(
@@ -36,32 +33,6 @@ export const setup = callback => {
       colors.yellow(symlinkDirectoryName + ' already exists. Skipped it.')
     )
   }
-
-  Object.keys(themes).forEach(name => {
-    let templatesPath = path.join(projectPath, themes[name].src, 'web/images/icons/templates/')
-
-    // Copy over any new template files
-    fs.readdirSync(templateSamplePath).forEach(fileName => {
-      const newFileName = fileName.replace('.sample', '')
-
-      try {
-        fs.copySync(
-          path.join(templateSamplePath, fileName),
-          path.join(templatesPath, newFileName), {
-            overwrite: false,
-            errorOnExist: true
-          }
-        )
-
-        log('File ' + fileName + ' copied to web/images/icons/templates/' + newFileName)
-      }
-      catch (error) {
-        log(
-          colors.yellow('File ' + newFileName + ' already exists. Skipped it.')
-        )
-      }
-    })
-  })
 
   // Copy all all non existent config files to /dev/tools/frontools/config/
   fs.readdirSync(configSamplesPath).forEach((fileName) => {

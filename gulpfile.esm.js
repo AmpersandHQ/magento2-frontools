@@ -20,6 +20,8 @@ import { watch as watchTask } from './tasks/watch'
 import { icons as iconsTask } from './tasks/ampersand/icons'
 import webpackBuildTask from './tasks/ampersand/webpack-build'
 import webpackDistTask from './tasks/ampersand/webpack-dist'
+import { setupBackstop } from './tasks/ampersand/setup-backstop'
+import { setupTemplates } from './tasks/ampersand/setup-templates'
 
 export const babel = series(inheritanceTask, babelTask)
 export const clean = cleanTask
@@ -28,7 +30,6 @@ export const dev = series(pipelineHelper, inheritanceTask, babelTask, stylesTask
 export const emailfix = emailFixTask
 export const inheritance = inheritanceTask
 export const sasslint = sassLintTask
-export const setup = setupTask
 export const styles = series(inheritanceTask, stylesTask)
 export const svg = series(inheritanceTask, svgTask)
 export const watch = watchTask
@@ -41,5 +42,6 @@ export const webpackBuild = webpackBuildTask
 export const webpackDist = webpackDistTask
 export const webpack = series(inheritanceTask, webpackBuild, webpackDist)
 export const build = series(styles, babel, webpackBuildTask, webpackDistTask)
+export const setup = series(setupTask, setupBackstop, setupTemplates)
 
 export { default as default } from './tasks/default'
