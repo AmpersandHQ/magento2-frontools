@@ -1,30 +1,38 @@
-'use strict';
-module.exports = function(gulp, plugins, config, file) { // eslint-disable-line func-names
+import logger from 'gulp-logger'
+import colors from 'ansi-colors'
+import backstopjs from 'backstopjs'
+import { env, themes } from '../config'
+import configLoader from '../config-loader'
 
-  return () => {
-    const backstopConfig = require('../helper/config-loader')('backstop.json', plugins, config),
-          backstopConfigFilePath = config.projectPath + 'dev/tools/frontools/config/backstop.json',
-          backstopOptions = {
-               "backstopConfigFilePath": backstopConfigFilePath
-          };
-
-    if (plugins.util.env.genConfig) {
-        console.log("Don't run this, run gulp setup instead [TODO]");
-    } else if (plugins.util.env.reference) {
-        if (plugins.util.env.filter) {
-            backstopOptions.filter = plugins.util.env.filter;
-        }
-        return plugins.backstopjs('reference', backstopOptions);
-    } else if (plugins.util.env.test) {
-        if (plugins.util.env.filter) {
-            backstopOptions.filter = plugins.util.env.filter;
-        }
-        return plugins.backstopjs('test', backstopOptions);
-    } else if (plugins.util.env.approve) {
-        return plugins.backstopjs('approve', backstopOptions);
-    } else {
-        console.log("Error, run with a flag to specify the required task: --reference, --test or --approve");
-        console.log("Or run the --filter flag alongside the --reference or --test flag");
-    }
+export default callback => {
+  const backstopConfig = configLoader('backstop.json', themes)
+  const backstopConfigFilePath = `${themes.projectPath}dev/tools/frontools/config/backstop.json`
+  const backstopOptions = {
+    'backstopConfigFilePath': backstopConfigFilePath
   }
-};
+
+  if (env.genConfig) {
+    logger(colors.yellow('Don\'t run this, run gulp setup instead [TODO]'))
+  }
+  else if (env.reference) {
+    if (env.filter) {
+      backstopOptions.filter = env.filter
+    }
+    return backstopjs('reference', backstopOptions)
+  }
+  else if (env.test) {
+    if (env.filter) {
+      backstopOptions.filter = env.filter
+    }
+    return backstopjs('test', backstopOptions)
+  }
+  else if (env.approve) {
+    return backstopjs('approve', backstopOptions)
+  }
+  else {
+    logger(colors.red('Error, run with a flag to specify the required task: --reference, --test or --approve'))
+    logger(colors.red('Or run the --filter flag alongside the --reference or --test flag'))
+  }
+
+  callback()
+}
