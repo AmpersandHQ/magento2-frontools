@@ -1,12 +1,12 @@
 import logger from 'gulp-logger'
 import colors from 'ansi-colors'
 import backstopjs from 'backstopjs'
-import { env, themes } from '../config'
+import { env, projectPath } from '../config'
 import configLoader from '../config-loader'
 
 export default callback => {
-  const backstopConfig = configLoader('backstop.json', themes)
-  const backstopConfigFilePath = `${themes.projectPath}dev/tools/frontools/config/backstop.json`
+  const backstopConfig = configLoader('backstop.json')
+  const backstopConfigFilePath = `${projectPath}dev/tools/frontools/config/backstop.json`
   const backstopOptions = {
     'backstopConfigFilePath': backstopConfigFilePath
   }
