@@ -40,7 +40,7 @@
         "parent"   : "base",
         "locale"   : ["en_GB"],
         "lang"     : "scss",
-        "postcss"  : ["plugins.autoprefixer()"],
+        "postcss"  : ["autoprefixer"],
         "stylesDir": "web/css"
     },
     "blank": {
@@ -69,7 +69,7 @@
         "localeOverwrites": true,
         "parent": "blank",
         "stylesDir": "web/css",
-        "postcss": ["plugins.autoprefixer()"],
+        "postcss": ["autoprefixer"],
         "modules": {
             "Snowdog_Sample": "vendor/snowdog/module-sample"
         },
