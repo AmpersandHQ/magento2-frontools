@@ -1,15 +1,15 @@
-import mergeStream from 'merge-stream'
-import themes from '../../helpers/get-themes'
-import webpackBuild from '../../helpers/ampersand/webpack-build'
+import mergeStream from 'merge-stream';
+import themes from '../../helpers/get-themes';
+import webpackBuild from '../../helpers/ampersand/webpack-build';
 
 const webpackBuildTask = () => {
-  const streams = mergeStream()
+    const streams = mergeStream();
 
-  themes().forEach(name => {
-    streams.add(webpackBuild(name))
-  })
+    themes().forEach(name => {
+        streams.add(webpackBuild(name));
+    });
 
-  return streams
-}
+    return streams;
+};
 
-export default webpackBuildTask
+export default webpackBuildTask;
