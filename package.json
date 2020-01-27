@@ -12,6 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@ampersandhq/gulpicon": "^1.2.6",
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "ansi-colors": "^4.1.1",
