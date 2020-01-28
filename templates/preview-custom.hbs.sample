@@ -1,0 +1,6 @@
+{{!--
+    We don't actually want a custom preview template, but gulpicon throws a tiz if this file doesn't exist.
+    Would you like a preview template for your project? Here's the sample from grunticon-lib:
+    https://github.com/filamentgroup/grunticon-lib/blob/master/static/preview.hbs
+    Just copy that over and make whatever tweaks your heart desires!
+--}}
