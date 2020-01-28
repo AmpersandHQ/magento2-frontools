@@ -36,7 +36,7 @@
   },
   "overrides": [
     {
-      "files":["./**/ampersand/*.js"],
+      "files": ["./**/ampersand/*.js"],
       "rules": {
         "indent": [1, 4],
         "semi": [1, "always"]

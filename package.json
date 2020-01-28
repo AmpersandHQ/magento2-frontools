@@ -80,11 +80,14 @@
     "setup": "gulp setup",
     "styles": "gulp styles",
     "svg": "gulp svg",
-    "icons": "gulp icons",
     "watch": "gulp watch",
+    "test": "eslint *.js helpers/**/*.js tasks/**/*.js",
     "webpackBuild": "gulp webpackBuild",
     "webpackDist": "gulp webpackDist",
-    "test": "eslint *.js helpers/*.js tasks/*.js"
+    "webpack": "gulp webpack",
+    "icons": "gulp icons",
+    "imagemin": "gulp imagemin",
+    "backstop": "gulp backstop"
   },
   "engines": {
     "node": ">=12.13.0 <13.0.0"
