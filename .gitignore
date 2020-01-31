@@ -1,5 +1,1 @@
 /**/node_modules
-
-# Ignore package-lock as it causes Travis release
-# tests to error with `npm ERR: cb() never called!`
-package-lock.json
