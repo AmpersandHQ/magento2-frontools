@@ -1,10 +1,12 @@
 import path from 'path';
 import globby from 'globby';
+import colors from 'ansi-colors';
 import gulpicon from '@ampersandhq/gulpicon';
 import configLoader from '../config-loader';
 import { projectPath, themes } from '../config';
 
 export default (name, cb) => {
+    console.log(`${colors.green('Running Gulpicon on')} ${colors.blue(name)} ${colors.green('theme...')}`);
     const theme = themes[name];
     const config = configLoader('gulpicon.json');
     const srcBase = path.join(projectPath, theme.src);
