@@ -24,7 +24,6 @@ import { setupBackstop } from './tasks/ampersand/setup-backstop'
 import { setupTemplates } from './tasks/ampersand/setup-templates'
 import backstopTask from './tasks/ampersand/backstop'
 import imageminTask from './tasks/ampersand/imagemin'
-import concatIconsTask from './tasks/ampersand/concat-icon-styles'
 
 export const babel = series(inheritanceTask, babelTask)
 export const clean = cleanTask
@@ -40,8 +39,7 @@ export const watch = watchTask
 /**
  * Amp-specific tasks
  */
-export const concatIcons = concatIconsTask
-export const icons = series(inheritanceTask, iconsTask, concatIconsTask)
+export const icons = series(inheritanceTask, iconsTask)
 export const webpackBuild = webpackBuildTask
 export const webpackDist = webpackDistTask
 export const backstop = backstopTask

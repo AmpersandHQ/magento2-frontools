@@ -3,12 +3,14 @@ import globby from 'globby';
 import colors from 'ansi-colors';
 import gulpicon from '@ampersandhq/gulpicon';
 import configLoader from '../config-loader';
-import { projectPath, themes } from '../config';
+import { projectPath, themes as themesConfig } from '../config';
+import themes from '../get-themes';
 
 export default (name, cb) => {
+    let icons = [];
     // eslint-disable-next-line no-console
     console.log(`${colors.green('Running Gulpicon on')} ${colors.blue(name)} ${colors.green('theme...')}`);
-    const theme = themes[name];
+    const theme = themesConfig[name];
     const config = configLoader('gulpicon.json');
     const srcBase = path.join(projectPath, theme.src);
     const iconPath = path.join(srcBase, config.themeSrc);
@@ -24,9 +26,22 @@ export default (name, cb) => {
     // possible permissions issue?
     config.tmpPath = iconPath;
 
-    console.log(name, config);
+    // if we aren't in the base theme, glob all icons from both
+    // base theme and our current theme together to ensure that
+    // they get picked up by gulpicon and added to the stylesheet
+    // for the theme.
+    // Base theme is excluded so that we don't accidentally add
+    // custom icons from a theme into base theme
+    if (name !== 'base') {
+        icons = themes().reduce((iconList, name) => {
+            const { src } = themesConfig[name];
+            const iconsPath = path.join(projectPath, src, config.themeSrc);
 
-    const icons = globby.sync(`${iconPath}*.svg`);
+            return iconList.concat(globby.sync(`${iconsPath}*.svg`));
+        }, []);
+    } else {
+        icons = globby.sync(`${iconPath}*.svg`);
+    }
 
     return gulpicon(icons, config)(cb);
 };
