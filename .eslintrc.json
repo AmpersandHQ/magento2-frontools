@@ -39,7 +39,8 @@
       "files": ["./**/ampersand/*.js"],
       "rules": {
         "indent": [1, 4],
-        "semi": [1, "always"]
+        "semi": [1, "always"],
+        "brace-style": [2, "1tbs"]
       }
     }
   ]
