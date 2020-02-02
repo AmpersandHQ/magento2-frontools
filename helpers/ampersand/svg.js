@@ -6,6 +6,7 @@ import configLoader from '../config-loader';
 import { projectPath, themes } from '../config';
 
 export default (name, cb) => {
+    // eslint-disable-next-line no-console
     console.log(`${colors.green('Running Gulpicon on')} ${colors.blue(name)} ${colors.green('theme...')}`);
     const theme = themes[name];
     const config = configLoader('gulpicon.json');
@@ -22,6 +23,8 @@ export default (name, cb) => {
     // a temp directory at OS-level as it does by default -
     // possible permissions issue?
     config.tmpPath = iconPath;
+
+    console.log(name, config);
 
     const icons = globby.sync(`${iconPath}*.svg`);
 
