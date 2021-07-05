@@ -24,6 +24,7 @@ import { setupBackstop } from './tasks/ampersand/setup-backstop'
 import { setupTemplates } from './tasks/ampersand/setup-templates'
 import backstopTask from './tasks/ampersand/backstop'
 import imageminTask from './tasks/ampersand/imagemin'
+import { eslint as eslintTask } from './tasks/ampersand/eslint'
 
 export const babel = series(inheritanceTask, babelTask)
 export const clean = cleanTask
@@ -46,6 +47,7 @@ export const backstop = backstopTask
 export const imagemin = imageminTask
 export const webpack = series(inheritanceTask, webpackBuild, webpackDist)
 export const build = series(styles, babel, webpackBuildTask, webpackDistTask)
+export const eslint = eslintTask
 // NOTE: This changes the default setup task that comes with Frontools to use theirs and
 // ours. Done like this as we already tell people to run `gulp setup` to get the tools folder
 // symlinked (etc.), so rather than breaking established habit, let's just keep the
